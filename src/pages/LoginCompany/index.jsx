@@ -15,8 +15,8 @@ const LoginCompany = () => {
     navigation.goBack()
   }
 
-  function handleNavigateToScan(){
-    /*const data = {
+  async function handleNavigateToScan(){
+    const data = {
       email,
       password
     }
@@ -29,9 +29,7 @@ const LoginCompany = () => {
       navigation.navigate('Scan')
     } catch (error) {
       throw error
-    } */
-    navigation.navigate('Scan')
-
+    }
   }
 
   return(
@@ -49,6 +47,7 @@ const LoginCompany = () => {
           <TextInput
             style={styles.input}
             label="Email"
+            placeholder="Digite seu Email"
             value={email}
             onChangeText={email => setEmail(email)}
           />
@@ -56,8 +55,10 @@ const LoginCompany = () => {
           <TextInput
             style={styles.input}
             label="Senha"
+            placeholder="Digite sua Senha"
             value={password}
             onChangeText={password => setPassword(password)}
+            secureTextEntry={true}
           />
 
             <RectButton style={styles.button} onPress={handleNavigateToScan} >

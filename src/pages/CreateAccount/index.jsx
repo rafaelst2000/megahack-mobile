@@ -8,9 +8,35 @@ import axios from 'axios'
 const CreateAccount = () => {
   const navigation = useNavigation()
 
+  const [name, setName] = React.useState('')
+  const [cpf, setCpf] = React.useState('')
+  const [password, setPassword] = React.useState('')
+  const [email, setEmail] = React.useState('')
+
   function handleNavigateBack(){
     navigation.goBack()
   }
+
+  async function handleCreateAccount(){
+    const data = {
+      name,
+      email,
+      password,
+      cpf,
+    }
+    try {
+      const response = await axios({
+        method: 'post',
+        url: 'https://mega-hack-api.herokuapp.com/user',
+        data
+      })
+      navigation.navigate('Home')
+    } catch (error) {
+      throw error
+    }
+
+  }
+
 
   return(
   <KeyboardAvoidingView style={{flex: 1}} behavior={Platform.OS === 'ios' ? 'padding': undefined}>
@@ -26,26 +52,38 @@ const CreateAccount = () => {
           <View style={styles.card}>
           <TextInput
             style={styles.input}
+            label="Nome"
             placeholder="Nome Completo"
+            value={name}
+            onChangeText={name => setName(name)}
           />
 
           <TextInput
             style={styles.input}
+            label="CPF"
             placeholder="CPF"
+            value={cpf}
+            onChangeText={cpf => setCpf(cpf)}
           />
 
           <TextInput
             style={styles.input}
+            label="Email"
             placeholder="E-mail"
+            value={email}
+            onChangeText={email => setEmail(email)}
           />
 
           <TextInput
             style={styles.input}
+            label="Senha"
             placeholder="Senha"
+            value={password}
+            onChangeText={password => setPassword(password)}
             secureTextEntry={true}
           />
 
-            <RectButton style={styles.button}>
+            <RectButton style={styles.button} onPress={handleCreateAccount}>
               <Text style={styles.buttonText}>Criar conta</Text>
             </RectButton>
 

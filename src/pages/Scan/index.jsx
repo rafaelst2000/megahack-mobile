@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Constants from 'expo-constants'
-import { View,Text,StyleSheet,TouchableOpacity, Image} from 'react-native'
+import { View,Text,StyleSheet, Button} from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { Feather as Icon } from '@expo/vector-icons'
+import { BarCodeScanner } from 'expo-barcode-scanner'
 
 import * as Permissions from 'expo-permissions';
 
 
 const Scan = () => {
+  const [hasPermission, setHasPermission] = useState(null);
+  const [scanned, setScanned] = useState(false);
+
   const navigation = useNavigation()
 
   function handleNavigateBack(){
@@ -18,29 +21,46 @@ const Scan = () => {
     async function getCameraAsync() {
       const { status, permissions } = await Permissions.askAsync(Permissions.CAMERA);
       if (status === 'granted') {
-        console.log("Camera concedida!")
-        //return Camera.getCurrentPositionAsync({ e: true });
       } else {
-        throw new Error('Location permission not granted');
+        throw new Error('Você precisa dar permissão da câmera.');
       }
     }
     getCameraAsync()
   },[])
 
+  useEffect(() => {
+    (async () => {
+      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })();
+  }, []);
+
+  const handleBarCodeScanned = ({ type, data }) => {
+    setScanned(true);
+    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+  };
+
+    if (hasPermission === null) {
+      return <Text>Pedindo permissão da câmera...</Text>;
+    }
+    if (hasPermission === false) {
+      return <Text>Sem acesso à câmera :(</Text>;
+    }
+
   return(
   <>  
-    <View style={styles.container}>
-      <TouchableOpacity onPress={handleNavigateBack}>
-        <Icon style={{marginHorizontal: 32}} name="chevron-left" size={30} color="#71bf44"/>
-      </TouchableOpacity>
+     <View
+      style={{
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+      }}>
+      <BarCodeScanner
+        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        style={StyleSheet.absoluteFillObject}
+      />
 
-      <View style={styles.main}> 
-        <Text style={styles.title}>
-          Status Mundial
-        </Text>
-
-
-      </View>     
+      {scanned && <Button title={'Clique para novo scan'} onPress={() => setScanned(false)} />}
     </View>
         
   </>  

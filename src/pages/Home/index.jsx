@@ -56,6 +56,7 @@ const Home = () => {
           <TextInput
             style={styles.input}
             label="Email"
+            placeholder="Digite seu Email"
             value={email}
             onChangeText={email => setEmail(email)}
           />
@@ -63,8 +64,10 @@ const Home = () => {
           <TextInput
             style={styles.input}
             label="Senha"
+            placeholder="Digite sua Senha"
             value={password}
             onChangeText={password => setPassword(password)}
+            secureTextEntry={true}
           />
 
             <RectButton style={styles.button} onPress={handleNavigateToMyTickets}>

@@ -5,11 +5,22 @@ import { useNavigation } from '@react-navigation/native'
 import { Feather as Icon } from '@expo/vector-icons'
 
 const AllCountries = () => {
+  const tickets = [
+    {
+      event: "puteiro da irene",
+      hash: "asdasdasdsadsad"
+    },
+    {
+      event: "puteiro só putas",
+      hash: "asasdsasdsadsad"
+    }
+  ]
+
   const navigation = useNavigation()
 
-  function handleGoQRCode(){
-    console.log('chamou')
-    navigation.navigate('QrCode')
+  function handleGoQRCode(hash){
+    console.log(hash)
+    //navigation.navigate('QrCode')
   }
 
   function handleNavigateBack(){
@@ -26,40 +37,19 @@ const AllCountries = () => {
       <View style={styles.itemsContainer}>
         <ScrollView 
         contentContainerStyle={{paddingHorizontal: 20}}>
-        <TouchableOpacity
-           onPress={handleGoQRCode}> 
-            <View style={styles.out}>
-              <View style={styles.line}>
-              
-                <Text style={styles.text}>Meu evento</Text>
-              
-              </View>
-            </View>
-          </TouchableOpacity>
 
+        {
+          tickets.map(ticket => (
           <TouchableOpacity
-           onPress={() => {}}> 
+           key={ticket.hash}
+           onPress={() => handleGoQRCode(ticket.hash)}> 
             <View style={styles.out}>
               <View style={styles.line}>
-              
-                <Text style={styles.text}>Meu evento</Text>
-              
+                <Text style={styles.text}>{ticket.event}</Text>
               </View>
             </View>
           </TouchableOpacity>
-        {/*  {data.map(country => (
-          <TouchableOpacity
-           key={country.Country} 
-           onPress={() => handleSelectedCountry(country.Country)}> 
-            <View style={styles.out}>
-              <View style={styles.line}>
-              
-                <Text style={styles.text}>{country.Country}</Text>
-              
-              </View>
-            </View>
-           </TouchableOpacity>  
-          ))} */}
+          ))}
         
         </ScrollView>
        </View>

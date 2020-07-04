@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { View,Text,StyleSheet, 
-Image, KeyboardAvoidingView, Platform, TextInput } from 'react-native'
+         Image, KeyboardAvoidingView, Platform, TextInput } from 'react-native'
 import { RectButton } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
-import api from '../../services/api'
-
 import axios from 'axios'
 
 const Home = () => {
@@ -24,6 +22,7 @@ const Home = () => {
   }
 
   async function handleNavigateToMyTickets(){
+    setTrue(false)
     const data = {
       email,
       password
@@ -34,7 +33,6 @@ const Home = () => {
         url: 'https://mega-hack-api.herokuapp.com/userLogin',
         data
       })
-      setTrue(false)
       navigation.navigate('MyTickets')
     } catch (error) {
       setTrue(true)
@@ -53,42 +51,42 @@ const Home = () => {
         </View>
 
         <View style={styles.card_out}>
+
           <View style={styles.card}>
-
-          <TextInput
-            style={styles.input}
-            label="Email"
-            placeholder="Digite seu Email"
-            value={email}
-            onChangeText={email => setEmail(email)}
-          />
-          
-          <TextInput
-            style={styles.input}
-            label="Senha"
-            placeholder="Digite sua Senha"
-            value={password}
-            onChangeText={password => setPassword(password)}
-            secureTextEntry={true}
-          />
-
-            <RectButton style={styles.button} onPress={handleNavigateToMyTickets}>
-              <Text style={styles.buttonText}>Entrar</Text>
-            </RectButton>
-
-            <RectButton style={styles.buttonSecondary} onPress={handleNavigateToLoginCompany} >
-              <Text style={styles.buttonTextSecondary}>Entrar como empresa</Text>
-            </RectButton>
-
-            <RectButton style={styles.buttonSecondary} onPress={handleNavigateToCreateAccount}>
-              <Text style={styles.buttonTextSecondary}>Criar conta</Text>
-            </RectButton>
+            <TextInput
+              style={styles.input}
+              label="Email"
+              placeholder="Digite seu Email"
+              value={email}
+              onChangeText={email => setEmail(email)}
+            />
             
-           {isTrue ?
-            <View style={styles.buttonSecondary} onPress={handleNavigateToMyTickets}>
-              <Text style={styles.textError}>Email ou senha inválidos</Text>
-            </View> : false
-           }
+            <TextInput
+              style={styles.input}
+              label="Senha"
+              placeholder="Digite sua Senha"
+              value={password}
+              onChangeText={password => setPassword(password)}
+              secureTextEntry={true}
+            />
+
+              <RectButton style={styles.button} onPress={handleNavigateToMyTickets}>
+                <Text style={styles.buttonText}>Entrar</Text>
+              </RectButton>
+
+              <RectButton style={styles.buttonSecondary} onPress={handleNavigateToLoginCompany} >
+                <Text style={styles.buttonTextSecondary}>Entrar como empresa</Text>
+              </RectButton>
+
+              <RectButton style={styles.buttonSecondary} onPress={handleNavigateToCreateAccount}>
+                <Text style={styles.buttonTextSecondary}>Criar conta</Text>
+              </RectButton>
+              
+            {isTrue ?
+              <View style={styles.buttonSecondary}>
+                <Text style={styles.textError}>Email ou senha inválidos</Text>
+              </View> : false
+            }
           </View>
         </View>  
       </View>
@@ -111,11 +109,12 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    height: 40,
+    height: 60,
     borderColor: 'transparent',
     borderBottomColor: 'grey',
     borderWidth: 1,
     marginBottom: 20,
+    fontSize: 20
   },
 
   title: {

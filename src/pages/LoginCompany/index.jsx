@@ -11,11 +11,14 @@ const LoginCompany = () => {
   const [password, setPassword] = React.useState('')
   const [email, setEmail] = React.useState('')
 
+  const [isTrue, setTrue] = React.useState(false)
+
   function handleGoBack(){
     navigation.goBack()
   }
 
   async function handleNavigateToScan(){
+    setTrue(false)
     const data = {
       email,
       password
@@ -23,12 +26,12 @@ const LoginCompany = () => {
     try {
       const response = await axios({
         method: 'post',
-        url: 'https://mega-hack-api.herokuapp.com/userLogin',
+        url: 'https://mega-hack-api.herokuapp.com/companyLogin',
         data
       })
       navigation.navigate('Scan')
     } catch (error) {
-      throw error
+      setTrue(true)
     }
   }
 
@@ -68,6 +71,12 @@ const LoginCompany = () => {
             <RectButton style={styles.buttonSecondary} onPress={handleGoBack} >
               <Text style={styles.buttonTextSecondary}>Voltar</Text>
             </RectButton>
+
+            {isTrue ?
+            <View style={styles.buttonSecondary}>
+              <Text style={styles.textError}>Email ou senha inválidos</Text>
+            </View> : false
+           }
             
           </View>
       </View>  
@@ -92,11 +101,12 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    height: 40,
+    height: 60,
     borderColor: 'transparent',
     borderBottomColor: 'grey',
     borderWidth: 1,
     marginBottom: 20,
+    fontSize: 20
   },
 
   title: {
@@ -155,7 +165,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: 'Roboto_500Medium',
     fontSize: 16,
-  }
+  },
+  
+  textError: {
+    flex: 1,
+    justifyContent: 'center',
+    textAlign: 'center',
+    color: 'red',
+    fontWeight: 'bold',
+    fontFamily: 'Roboto_500Medium',
+    fontSize: 24,
+  },
 });
 
 export default LoginCompany

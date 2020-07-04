@@ -14,11 +14,6 @@ const QrCode = () => {
   function handleNavigateBack(){
     navigation.goBack()
   }
-
-  useEffect(() => {
-    console.log("hash: "+routeParams.data)
-
-  })
    
   return(
   <>  
@@ -27,11 +22,14 @@ const QrCode = () => {
         <Icon style={{marginHorizontal: 32}} name="chevron-left" size={30} color="#225199"/>
       </TouchableOpacity>
 
+
       <View style={styles.main}> 
+        <Text style={styles.title}>{routeParams.data[1]}</Text>
+        
         <View style={styles.image}>
           <QRCode
-            value={routeParams.data}
-            logoSize={300}
+            value={routeParams.data[0]}
+            size={260}
             logoBackgroundColor='transparent'
           />
           </View>
@@ -56,13 +54,23 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
 
+  image: {
+    padding: 20,
+    borderRadius: 8,
+    width: 300,
+    height: 300,
+    backgroundColor: '#f5f5f0'
+  },
+
 
   title: {
     color: '#fff',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: {width: 0, height: 0},
+    textShadowRadius: 8,
     padding: 24,
     fontSize: 40,
     fontFamily: 'Ubuntu_700Bold',
-    marginTop: 32,
     textAlign: "center",
   },
 

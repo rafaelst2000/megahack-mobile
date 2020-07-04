@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import Constants from 'expo-constants'
-import { View,Text,StyleSheet, Button} from 'react-native'
+import { View,Text,StyleSheet, Button, Image} from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { BarCodeScanner } from 'expo-barcode-scanner'
+import axios from 'axios'
 
 import * as Permissions from 'expo-permissions';
 
 
 const Scan = () => {
   const [hasPermission, setHasPermission] = useState(null);
-  const [scanned, setScanned] = useState(false);
+  const [scanned, setScanned] = useState(false);7
 
   const navigation = useNavigation()
 
@@ -37,7 +38,20 @@ const Scan = () => {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    checkBarCode(data)
+    async function checkBarCode(data){
+      try {
+        const response = await axios({
+          method: 'post',
+          url: 'https://mega-hack-api.herokuapp.com/checkTicket',
+          data: {code: data}
+        })
+        alert("Cupom Válido")
+      } catch (error) {
+        alert("Cupom inválido")
+        console.log(error)
+      }
+    }
   };
 
     if (hasPermission === null) {
@@ -54,13 +68,29 @@ const Scan = () => {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-end',
+        backgroundColor: 'black'
       }}>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={StyleSheet.absoluteFillObject}
-      />
+        style={[StyleSheet.absoluteFill, styles.container]}>
+        <Text style={styles.description}>Posicione o QR Code</Text>
+        <Image
+          style={styles.qr}
+          source={require('../../assets/qr.png')}
+        />
+        {scanned &&
+        <Text
+        onPress={() => setScanned(false)}
+        style={styles.new}>
+        Clique para Novo Scan
+        </Text>}
 
-      {scanned && <Button title={'Clique para novo scan'} onPress={() => setScanned(false)} />}
+        <Text
+          onPress={handleNavigateBack}
+          style={styles.cancel}>
+          Voltar
+        </Text>
+      </BarCodeScanner>
     </View>
         
   </>  
@@ -69,26 +99,36 @@ const Scan = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#140d21',
-    paddingTop: 20 + Constants.statusBarHeight,
+    alignItems: 'center',
   },
-
-  main: {
+  qr: {
     justifyContent: 'center',
-    textAlign: 'center'
-
+    alignItems: 'center',
+    marginTop: '50%',
+    width: 250,
+    height: 250,
+  },
+  description: {
+    fontSize: 24,
+    marginTop: '10%',
+    textAlign: 'center',
+    width: '70%',
+    color: 'white',
+  },
+  new: {
+    fontSize:  24,
+    textAlign: 'center',
+    width: '70%',
+    color: 'white',
+    marginTop: 20
   },
 
-  title: {
-    color: '#fff',
-    padding: 24,
-    fontSize: 40,
-    fontFamily: 'Ubuntu_700Bold',
-    marginTop: 32,
-    textAlign: "center",
-  },
-  table: {
-    padding: 32
+  cancel: {
+    fontSize:  24,
+    textAlign: 'center',
+    width: '70%',
+    color: 'white',
+    marginTop: 50,
   },
 
 })

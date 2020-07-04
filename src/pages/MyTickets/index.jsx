@@ -17,8 +17,9 @@ useEffect(() => {
       const response = await axios({
         method: 'get',
         url: 'https://mega-hack-api.herokuapp.com/user',
-      })   
+      })
       setTickets(response.data[0].tickets)
+      console.log(response.data[0].tickets)
     } catch (error) {
     }
   }  
@@ -29,8 +30,9 @@ useEffect(() => {
 
   const navigation = useNavigation()
 
-  function handleGoQRCode(hash){
-    navigation.navigate('QrCode', {data: hash})
+  function handleGoQRCode(hash, name){
+    const data = [hash, name]
+    navigation.navigate('QrCode', {data})
   }
 
   function handleNavigateBack(){
@@ -44,24 +46,26 @@ useEffect(() => {
         <Icon style={{marginHorizontal: 32}} name="chevron-left" size={30} color="#225199"/>
       </TouchableOpacity>
 
-      <View style={styles.itemsContainer}>
-        <ScrollView 
-        contentContainerStyle={{paddingHorizontal: 20}}>
+      <View style={styles.outContainer}>
+        <View style={styles.itemsContainer}>
+          <ScrollView 
+          contentContainerStyle={{paddingHorizontal: 20}}>
 
-        {tickets.map(ticket => (
-          <TouchableOpacity
-           key={String(ticket.id)}
-           onPress={() => handleGoQRCode(ticket.qr_code_id_hash)}> 
-            <View style={styles.out}>
-              <View style={styles.line}>
-                <Text style={styles.text}>{ticket.name}</Text>
+          {tickets.map(ticket => (
+            <TouchableOpacity
+            key={String(ticket.id)}
+            onPress={() => handleGoQRCode(ticket.users_tickets.qr_code_id_hash, ticket.name)}> 
+              <View style={styles.out}>
+                <View style={styles.line}>
+                  <Text style={styles.text}>{ticket.name}</Text>
+                </View>
               </View>
-            </View>
-          </TouchableOpacity>
-          ))}
-        
-        </ScrollView>
-       </View>
+            </TouchableOpacity>
+            ))}
+          
+          </ScrollView>
+        </View> 
+      </View>   
     </View>
         
   </>  
@@ -100,7 +104,15 @@ const styles = StyleSheet.create({
     marginBottom: 5
   },
 
+  outContainer: {
+    flex: 1,
+    padding: 20,
+  },
+
   itemsContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    borderRadius: 8,
     flexDirection: 'row',
     marginTop: 16,
     marginBottom: 32,

@@ -113,11 +113,12 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    height: 40,
+    height: 60,
     borderColor: 'transparent',
     borderBottomColor: 'grey',
     borderWidth: 1,
     marginBottom: 20,
+    fontSize: 20
   },
 
   title: {
@@ -125,7 +126,6 @@ const styles = StyleSheet.create({
   },
   card_out:{
     flex: 1,
-    
     justifyContent: 'center',
     padding: 20,
   },

@@ -1,32 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import Constants from 'expo-constants'
 import { View,Text,StyleSheet,TouchableOpacity, Image} from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { useRoute, useNavigation } from '@react-navigation/native'
 import { Feather as Icon } from '@expo/vector-icons'
-import axios from 'axios'
+import QRCode from 'react-native-qrcode-svg';
 
 const QrCode = () => {
   const navigation = useNavigation()
+
+  const route = useRoute()
+  const routeParams = route.params
 
   function handleNavigateBack(){
     navigation.goBack()
   }
 
   useEffect(() => {
-    async function returnData(){
-      try {
-        const response = await axios({
-          method: 'get',
-          url: 'https://mega-hack-api.herokuapp.com/qrcode',
-          responseType: 'arraybuffer',
-        })
-        console.log(response.data)
-      } catch (error) {
-        throw error
-      }
-    } 
-    returnData()
-  }, [])
+    console.log("hash: "+routeParams.data)
+
+  })
    
   return(
   <>  
@@ -37,8 +29,11 @@ const QrCode = () => {
 
       <View style={styles.main}> 
         <View style={styles.image}>
-            <Image source={require('../../assets/bg.png')}
-            style={{width: 345, height: 345}}/>
+          <QRCode
+            value={routeParams.data}
+            logoSize={300}
+            logoBackgroundColor='transparent'
+          />
           </View>
       </View>
       

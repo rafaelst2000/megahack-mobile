@@ -13,6 +13,7 @@ const Home = () => {
   const [password, setPassword] = React.useState('')
   const [email, setEmail] = React.useState('')
 
+  const [isTrue, setTrue] = React.useState(false)
 
   function handleNavigateToCreateAccount(){
     navigation.navigate('CreateAccount')
@@ -33,9 +34,10 @@ const Home = () => {
         url: 'https://mega-hack-api.herokuapp.com/userLogin',
         data
       })
+      setTrue(false)
       navigation.navigate('MyTickets')
     } catch (error) {
-      throw error
+      setTrue(true)
     }
 
   }
@@ -82,11 +84,14 @@ const Home = () => {
               <Text style={styles.buttonTextSecondary}>Criar conta</Text>
             </RectButton>
             
+           {isTrue ?
+            <View style={styles.buttonSecondary} onPress={handleNavigateToMyTickets}>
+              <Text style={styles.textError}>Email ou senha inválidos</Text>
+            </View> : false
+           }
           </View>
-      </View>  
-
+        </View>  
       </View>
-
     </View>
   </KeyboardAvoidingView>
   )
@@ -102,6 +107,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     marginVertical: 32,
+
   },
 
   input: {
@@ -117,7 +123,6 @@ const styles = StyleSheet.create({
   },
   card_out:{
     flex: 1,
-    
     justifyContent: 'center',
     padding: 20,
   },
@@ -168,7 +173,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: 'Roboto_500Medium',
     fontSize: 16,
-  }
+  },
+
+  textError: {
+    flex: 1,
+    justifyContent: 'center',
+    textAlign: 'center',
+    color: 'red',
+    fontWeight: 'bold',
+    fontFamily: 'Roboto_500Medium',
+    fontSize: 24,
+  },
 });
 
 export default Home

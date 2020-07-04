@@ -1,26 +1,36 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Constants from 'expo-constants'
 import { View,Text,StyleSheet,TouchableOpacity, ScrollView} from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { useRoute ,useNavigation } from '@react-navigation/native'
 import { Feather as Icon } from '@expo/vector-icons'
+import { useState } from 'react'
+import axios from 'axios'
 
 const AllCountries = () => {
-  const tickets = [
-    {
-      event: "puteiro da irene",
-      hash: "asdasdasdsadsad"
-    },
-    {
-      event: "puteiro só putas",
-      hash: "asasdsasdsadsad"
+  const route = useRoute()
+  const routeParams = route.params
+
+
+useEffect(() => {
+  async function getTickets(){
+    try {
+      const response = await axios({
+        method: 'get',
+        url: 'https://mega-hack-api.herokuapp.com/user',
+      })   
+      setTickets(response.data[0].tickets)
+    } catch (error) {
     }
-  ]
+  }  
+    getTickets()
+  },[])
+  
+  const [tickets, setTickets] = useState([])
 
   const navigation = useNavigation()
 
   function handleGoQRCode(hash){
-    console.log(hash)
-    //navigation.navigate('QrCode')
+    navigation.navigate('QrCode', {data: hash})
   }
 
   function handleNavigateBack(){
@@ -38,14 +48,13 @@ const AllCountries = () => {
         <ScrollView 
         contentContainerStyle={{paddingHorizontal: 20}}>
 
-        {
-          tickets.map(ticket => (
+        {tickets.map(ticket => (
           <TouchableOpacity
-           key={ticket.hash}
-           onPress={() => handleGoQRCode(ticket.hash)}> 
+           key={String(ticket.id)}
+           onPress={() => handleGoQRCode(ticket.qr_code_id_hash)}> 
             <View style={styles.out}>
               <View style={styles.line}>
-                <Text style={styles.text}>{ticket.event}</Text>
+                <Text style={styles.text}>{ticket.name}</Text>
               </View>
             </View>
           </TouchableOpacity>

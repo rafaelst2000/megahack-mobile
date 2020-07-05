@@ -1,5 +1,5 @@
 <h1 align=center>
-<img src="./src/img/logo.png" />
+<img src="./src/assets/logo.png" />
 </h1>
 
 <div align="center">
@@ -56,7 +56,7 @@ Somos uma plataforma que tem como objetivo agregar valor ao business do Mercado 
 
 ### **Executando o Projeto**
 
-#### **:iphone: Frontend**
+#### **:iphone: Mobile**
 > 1. $cd megahack-mobile
 > 2. $npm install
 > 3. $npm start

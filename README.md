@@ -1,35 +1,54 @@
 <h1 align=center>
-<img src="./assets/icon.png" /> <br>
-Covid Report
+<img src="./src/img/logo.png" />
 </h1>
 
 <div align="center">
 
-![Node_Badge][node_version_badge] ![Npm_Badge][npm_version_badge] ![React_Native_Badge][mobile_react-native_badge] ![NodeJS_Badge][server_nodejs_badge] [![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.png?v=101)](https://github.com/ellerbrock/typescript-badges/)
+![Node_Badge][node_version_badge] ![Npm_Badge][npm_version_badge] ![React_Badge][web_react_badge] ![React_Native_Badge][mobile_react-native_badge] ![NodeJS_Badge][server_nodejs_badge] [![Javascript](https://badges.frapsoft.com/javascript/code/javascript.png?v=101)](https://github.com/ellerbrock/javascript-badges/)
 
 </div>
 
 <h3 align="center">
 
-Projeto **Open Source** desenvolvido para testar a **[API COVID-19][api-covid]**, utilizando as tecnologias ***TypeScript, Node.js e React Native***.
+Projeto desenvolvido na 3ª Megahack da **[Shawee][shawee_site]** utilizando as tecnologias ***Javascript, Node.js, ReactJS, React Native***.
 
 </h3>
 
+<!-- 
+  ...
+  Local Reservado para o Banner com a montagem da tela
+  do site e do aplicativo mobile.
+  ...
+-->
+
 ## **:rocket: Objetivo**
 
-O projeto tem como finalidade **mostrar dados** da Covid-19 de forma rápida e prática.
+Somos uma plataforma que tem como objetivo agregar valor ao business do Mercado Livre, atribuindo a plataforma a venda de ingressos para eventos como: teatro, cinema, festas entre outros. Teremos a função de vendas em uma plataforma web, tendo nela dois tipo de usuários: o produtor de eventos e o cliente final. Na visão do cliente ele pode procurar por eventos e comprar os ingressos, já na visão do produtor ele pode criar os eventos e a quantidade de ingressos disponíveis. Para completar a validação do ingresso estamos gerando no aplicativo um QR Code que é lido pelo produtor do evento antes de liberar a entrada no mesmo.
 
 ## **:computer: Tecnologias**
 
-#### **Aplicativo** [React-Native][react_native] + [TypeScript][typescript]
+#### **Website: React + Javascript** 
 
-  - **[Axios][axios]**
-  - **[Api-Covid][api-covid]**
+  - **React Router Dom**
+  - **React Icons**
+  - **Axios**
+  - **React-Cookie**
 
-#### **Utilitários**
+#### Server NodeJS
 
-- Ícones: **[Feather Icons][feather_icons]**
-- Fontes: **[Ubuntu][font_ubuntu]**, **[Roboto][font_roboto]**
+  - **Express**
+  - **CORS**
+  - **Sequelize**
+  - **Postgres**
+  - **MercadoPago API**
+  
+  #### **Aplicativo: React-Native + Javascript**
+  
+  - **Expo**
+  - **React-Navigation**
+  - **React Icons**
+  - **Axios**
+  - **BarCodeScanner**
 
 [font_roboto]: https://fonts.google.com/specimen/Roboto
 
@@ -37,18 +56,18 @@ O projeto tem como finalidade **mostrar dados** da Covid-19 de forma rápida e p
 
 ### **Executando o Projeto**
 
-#### **:iphone: Mobile**
-> 1. $cd covid-report
+#### **:iphone: Frontend**
+> 1. $cd megahack-mobile
 > 2. $npm install
 > 3. $npm start
-> 4. Abra o Expo no seu dispositivo móvel
-> 5. Escaneie o QR Code
+> 4. No seu celular, abra o Expo
+> 5. Escaneie o QR Code na tela do seu computador
 > 6. Enjoy!
 
 
 <!-- Website Links -->
 
-[api-covid]: https://api.covid19api.com/summary
+[shawee_site]: https://shawee.io/pt/
 
 <!-- Badges -->
 
